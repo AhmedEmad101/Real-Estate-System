@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Buy extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'Customer_ID',
         'Property_ID',
         'Price',
-        'Request_Date'
+        'Request_Date',
     ];
 }

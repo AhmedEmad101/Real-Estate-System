@@ -9,6 +9,7 @@ use PhpParser\Builder\Property;
 class Rent extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'Rent_id',
         'user_id',
@@ -19,11 +20,13 @@ class Rent extends Model
 
     ];
 
-    public function user (){
-        return $this->belongsTo(UserInfo::class,'user_id');
+    public function user()
+    {
+        return $this->belongsTo(UserInfo::class, 'user_id');
     }
+
     public function RentProperty()
     {
-        return $this->belongsTo(Property::class,'Property_id');
+        return $this->belongsTo(Property::class, 'Property_id');
     }
 }

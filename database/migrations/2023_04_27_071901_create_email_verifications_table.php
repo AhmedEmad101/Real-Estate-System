@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('UserId');
             $table->unsignedBigInteger('VerificationCode');
             $table->boolean('IsVerified');
-            $table->foreign('UserId')->references('id')->on('user_infos')->onDelete('cascade')->onUpdate('cascade');;
+            $table->foreign('UserId')->references('id')->on('user_infos')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

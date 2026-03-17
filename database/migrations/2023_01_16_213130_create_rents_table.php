@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('Property_ID');
             $table->date('Rent_date');
-            $table->string('Rent_period',50);
+            $table->string('Rent_period', 50);
             $table->double('cash');
             $table->foreign('user_id')->references('id')->on('user_infos')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('Property_ID')->references('id')->on('properties')->onDelete('cascade')->onUpdate('cascade');

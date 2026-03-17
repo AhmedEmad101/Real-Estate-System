@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Notifications;
-use App\Notifications\UserLoginInNotification;
+
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -41,20 +40,21 @@ class NewUserNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-        ->subject('User log in')
-        ->line('A user has logged in to your application.')
-        ->line('Email: ' . $notifiable->email)
-        ->line('Time: ' . now()->toDateTimeString());
+            ->subject('User log in')
+            ->line('A user has logged in to your application.')
+            ->line('Email: '.$notifiable->email)
+            ->line('Time: '.now()->toDateTimeString());
     }
+
     public function login(Request $request)
-{
-    // Perform the login logic...
+    {
+        // Perform the login logic...
 
-    $user = Auth::user();
-    $user->notify(new UserLoggedInNotification($user));
+        $user = Auth::user();
+        $user->notify(new UserLoggedInNotification($user));
 
-    return redirect()->intended($this->redirectPath());
-}
+        return redirect()->intended($this->redirectPath());
+    }
 
     /**
      * Get the array representation of the notification.

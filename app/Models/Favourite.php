@@ -9,23 +9,9 @@ class Favourite extends Model
 {
     use HasFactory;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     //******************** Relations *****************************/
-    protected function FavouriteProperties (){
-        return $this->belongsTo(Property::class,'Favourite_property_id');
+    protected function FavouriteProperties()
+    {
+        return $this->belongsTo(Property::class, 'Favourite_property_id');
     }
 }
-
-

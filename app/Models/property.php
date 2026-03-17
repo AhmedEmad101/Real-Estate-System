@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
+
 class property extends Model
 {
     use HasFactory;
+
     //public $timestamps = false;
     protected $fillable = [
         'id',
@@ -21,21 +22,23 @@ class property extends Model
         'Bedrooms',
         'Bathrooms',
         'Property_Image',
-        'Phone'
+        'Phone',
 
     ];
 
-    ########################     relations #########################
-    protected function PropertyType ()
+    //#######################     relations #########################
+    protected function PropertyType()
     {
-        return $this->hasOne(Type::class,'Type_ID','TypeID');
+        return $this->hasOne(Type::class, 'Type_ID', 'TypeID');
     }
+
     protected function PropertyPublisher()
     {
-        return $this->belongsTo(UserInfo::class,'Publisher_id');
+        return $this->belongsTo(UserInfo::class, 'Publisher_id');
     }
+
     protected function Transaction()
     {
-        return $this->hasOne(Transaction::class,'Property_ID');
+        return $this->hasOne(Transaction::class, 'Property_ID');
     }
 }

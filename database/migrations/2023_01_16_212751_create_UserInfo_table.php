@@ -16,11 +16,10 @@ return new class extends Migration
         Schema::create('user_infos', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->string('User_Name', 70)->unique();;
-            $table->string('email',70)->unique();
-            $table->string('password',100);
+            $table->string('User_Name', 70)->unique();
+            $table->string('email', 70)->unique();
+            $table->string('password', 100);
             $table->integer('Role');
-
 
         });
     }

@@ -9,21 +9,15 @@ class Report extends Model
 {
     use HasFactory;
 
+    //***********************Relations************************
 
-
-
-
-
-
-
-
-
-//***********************Relations************************
-
-    public function ReporterUser (){
-        return $this->belongsTo(UserInfo::class,'Reporter_ID');
+    public function ReporterUser()
+    {
+        return $this->belongsTo(UserInfo::class, 'Reporter_ID');
     }
-    public function ReportedUser (){
-        return $this->belongsTo(UserInfo::class,'Reported_ID');
+
+    public function ReportedUser()
+    {
+        return $this->belongsTo(UserInfo::class, 'Reported_ID');
     }
 }

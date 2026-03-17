@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('Phone');
             $table->string('Address');
             $table->string('ProfileImg');
-            $table->foreign('ProfileOwner')->references('id')->on('user_infos')->onDelete('cascade')->onUpdate('cascade');;
+            $table->foreign('ProfileOwner')->references('id')->on('user_infos')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

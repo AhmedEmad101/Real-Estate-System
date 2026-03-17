@@ -26,10 +26,10 @@ class AdvertisementController extends Controller
     {
         return view('Advertisement.create');
     }
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -58,6 +58,7 @@ class AdvertisementController extends Controller
 
         return redirect('/advertisements')->with('success', 'Advertisement has been added.');
     }
+
     /**
      * Display the specified resource.
      *
@@ -65,15 +66,15 @@ class AdvertisementController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-{
-    $advertisement = Advertisement::findOrFail($id);
-    return view('advertisements.show', compact('advertisement'));
-}
+    {
+        $advertisement = Advertisement::findOrFail($id);
+
+        return view('advertisements.show', compact('advertisement'));
+    }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Advertisement  $advertisement
      * @return \Illuminate\Http\Response
      */
     public function edit(Advertisement $advertisement)
@@ -84,8 +85,6 @@ class AdvertisementController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Advertisement  $advertisement
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Advertisement $advertisement)
@@ -96,24 +95,23 @@ class AdvertisementController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Advertisement  $advertisement
      * @return \Illuminate\Http\Response
      */
     public function destroy(Advertisement $advertisement)
     {
         //
     }
+
     public function search(Request $request)
-{
-    $location = $request->location;
-    $minPrice = $request->minPrice;
-    $maxPrice = $request->maxPrice;
+    {
+        $location = $request->location;
+        $minPrice = $request->minPrice;
+        $maxPrice = $request->maxPrice;
 
-    $advertisements = Advertisement::where('location', 'LIKE', '%'.$location.'%')
-                                    ->whereBetween('price', [$minPrice, $maxPrice])
-                                    ->get();
+        $advertisements = Advertisement::where('location', 'LIKE', '%'.$location.'%')
+            ->whereBetween('price', [$minPrice, $maxPrice])
+            ->get();
 
-    return view('advertisements.index', compact('advertisements'));
-}
-
+        return view('advertisements.index', compact('advertisements'));
+    }
 }

@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -12,19 +11,22 @@ use Illuminate\Queue\SerializesModels;
 class SignUp extends Mailable
 {
     use Queueable, SerializesModels;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-public $RandomNumber;
+    public $RandomNumber;
+
     public function __construct($RandomNumber)
     {
         $this->RandomNumber = $RandomNumber;
     }
+
     public function build()
     {
-        return $this->view('LoginAndSignUp.VerifyEmail')->with(['RandomNumber'=>$this->RandomNumber]);
+        return $this->view('LoginAndSignUp.VerifyEmail')->with(['RandomNumber' => $this->RandomNumber]);
     }
 
     /**

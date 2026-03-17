@@ -1,10 +1,10 @@
 <?php
 
 namespace Database\Seeders;
-use Illuminate\Support\Facades\DB;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -12,8 +12,5 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
-    {
-
-    }
+    public function run() {}
 }

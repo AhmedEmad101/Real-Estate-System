@@ -30,15 +30,15 @@ class TypeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $Type = new Type();
+        $Type = new Type;
         $Type->Type_name = $request->AddPropertyType;
         $Type->save();
-        return redirect('AdminPage')->with('TypeAdded','You added '.$request->AddPropertyType);
+
+        return redirect('AdminPage')->with('TypeAdded', 'You added '.$request->AddPropertyType);
     }
 
     /**
@@ -49,14 +49,13 @@ class TypeController extends Controller
      */
     public function show()
     {
-        $Types = array('PropertyType' =>Type::all());
+        $Types = ['PropertyType' => Type::all()];
 
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Type  $type
      * @return \Illuminate\Http\Response
      */
     public function edit(Type $type)
@@ -67,8 +66,6 @@ class TypeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Type  $type
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Type $type)
@@ -83,9 +80,11 @@ class TypeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
-    {   $TypeID = $request->PType;
-        $Type = Type::where('Type_ID',$TypeID);
+    {
+        $TypeID = $request->PType;
+        $Type = Type::where('Type_ID', $TypeID);
         $Type->delete();
-        return redirect('AdminPage')->with('TypeDeleted','The property Type Has been deleted');
+
+        return redirect('AdminPage')->with('TypeDeleted', 'The property Type Has been deleted');
     }
 }

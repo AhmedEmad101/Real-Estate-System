@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     use HasFactory;
+
     protected $fillable = [
 
         'user_id',
@@ -19,10 +20,11 @@ class Review extends Model
 
     protected function UserReview()
     {
-    return $this->belongsTo(UserInfo::class,'user_id');
+        return $this->belongsTo(UserInfo::class, 'user_id');
     }
+
     protected function ReviewedProperty()
     {
-        return $this ->belongsTo(Property::class,'property_id');
+        return $this->belongsTo(Property::class, 'property_id');
     }
 }

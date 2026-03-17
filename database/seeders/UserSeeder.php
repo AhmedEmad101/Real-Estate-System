@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 class UserSeeder extends Seeder
 {
     /**
@@ -21,21 +21,21 @@ class UserSeeder extends Seeder
             'User_Name' => 'ahmed1234',
             'email' => 'ahmed2@email.com',
             'password' => '123456',
-            'role'=>1
+            'role' => 1,
         ]);
-        for($x = 0;$x<10;$x++){
+        for ($x = 0; $x < 10; $x++) {
             DB::table('user_infos')->insert([
-                'User_Name' =>  $faker->unique()->userName,
+                'User_Name' => $faker->unique()->userName,
                 'email' => Str::random(10).'@example.com',
                 'password' => 'password',
-                'role'=>1
+                'role' => 1,
             ]);
         }
         DB::table('user_infos')->insert([
             'User_Name' => 'admin',
             'email' => 'admin@email.com',
             'password' => '123456',
-            'role'=>2,
+            'role' => 2,
         ]);
     }
 }

@@ -30,50 +30,46 @@ class AddressController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-       $request->validate(
+        $request->validate(
             [
-                'counrtry'=>'max:10',
-                'city'=>'max:10',
-                'address'=>'max:10',
+                'counrtry' => 'max:10',
+                'city' => 'max:10',
+                'address' => 'max:10',
             ]
-            );
-            $Address = new Address;
-            if($this->UserAddressesNumber(session('UserId'))==0){
+        );
+        $Address = new Address;
+        if ($this->UserAddressesNumber(session('UserId')) == 0) {
 
-                        $Address->UserId = session('UserId');
-                        $Address->Country = $request->country;
-                        $Address->City= $request->city;
-                        $Address->Address= $request->address;
+            $Address->UserId = session('UserId');
+            $Address->Country = $request->country;
+            $Address->City = $request->city;
+            $Address->Address = $request->address;
 
-                $Address->save();
-            }
+            $Address->save();
+        } else {
 
-            else{
+            $Address = Address::where('UserId', session('UserId'));
+            $Address
+                ->update([
+                    'Country' => $request->country,
+                    'City' => $request->city,
+                    'Address' => $request->address,
+                ]
+                );
 
-                $Address = Address::where('UserId',session('UserId'));
-                   $Address
-                    ->update([
-                        'Country'=>$request->country,
-                        'City'=>$request->city,
-                        'Address'=>$request->address
-                    ]
-                    );
+        }
 
-                }
-
-            return back()->with('AddressAdded','Your address has been changed successfully');
+        return back()->with('AddressAdded', 'Your address has been changed successfully');
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
      */
     public function show(Address $address)
@@ -84,7 +80,6 @@ class AddressController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
      */
     public function edit(Address $address)
@@ -99,13 +94,13 @@ class AddressController extends Controller
      * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function update(Address $Address,$Country,$City ,$UserID)
+    public function update(Address $Address, $Country, $City, $UserID)
     {
-        $Address = Address::where('UserId',$UserID);
+        $Address = Address::where('UserId', $UserID);
         $Address->update([
-            'Country'=>$Country,
-            'City'=>$City,
-            'Address'=>$Address
+            'Country' => $Country,
+            'City' => $City,
+            'Address' => $Address,
         ]);
         $Address->save();
     }
@@ -113,17 +108,17 @@ class AddressController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
      */
     public function destroy(Address $address)
     {
         //
     }
+
     protected function UserAddressesNumber($UserID)
     {
-        $address = Address::where('UserId',$UserID);
+        $address = Address::where('UserId', $UserID);
+
         return $address->count();
     }
-
 }

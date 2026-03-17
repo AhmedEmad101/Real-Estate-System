@@ -9,12 +9,13 @@ class EmailVerification extends Model
 {
     protected $fillable = [
         'id',
-         'UserId',
-         'VerificationCode',
-         'IsVerified',
-         'created_at',
-         'updated_at'
+        'UserId',
+        'VerificationCode',
+        'IsVerified',
+        'created_at',
+        'updated_at',
 
     ];
+
     use HasFactory;
 }

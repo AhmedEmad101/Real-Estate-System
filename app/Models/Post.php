@@ -9,14 +9,9 @@ class Post extends Model
 {
     use HasFactory;
 
-
-
-
-
-
     /****************Relations************************/
-    protected function User ()
+    protected function User()
     {
-        return $this->belongsTo(UserInfo::class,'user_id');
+        return $this->belongsTo(UserInfo::class, 'user_id');
     }
 }

@@ -12,19 +12,18 @@ return new class extends Migration
      * @return void
      */
     public function up()
-{
-    Schema::create('advertisements', function (Blueprint $table) {
-        $table->id();
-        $table->string('description');
-        $table->string('title');
-        $table->unsignedBigInteger('area');
-        $table->unsignedBigInteger('price');
-        $table->string('location');
-        $table->string('image')->nullable();
-        $table->timestamps();
-    });
-}
-
+    {
+        Schema::create('advertisements', function (Blueprint $table) {
+            $table->id();
+            $table->string('description');
+            $table->string('title');
+            $table->unsignedBigInteger('area');
+            $table->unsignedBigInteger('price');
+            $table->string('location');
+            $table->string('image')->nullable();
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.

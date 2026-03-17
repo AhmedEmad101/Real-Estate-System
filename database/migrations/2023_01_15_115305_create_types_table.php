@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('types', function (Blueprint $table) {
             $table->bigIncrements('Type_ID');
-            $table->string('Type_name',255);
+            $table->string('Type_name', 255);
         });
     }
 

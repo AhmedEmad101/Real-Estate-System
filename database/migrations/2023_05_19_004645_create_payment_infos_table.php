@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('Phone');
             $table->string('Address');
             $table->string('BillingMethod');
-            $table->foreign('UserId')->references('id')->on('user_infos')->onDelete('cascade')->onUpdate('cascade');;
+            $table->foreign('UserId')->references('id')->on('user_infos')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

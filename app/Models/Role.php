@@ -9,17 +9,9 @@ class Role extends Model
 {
     use HasFactory;
 
-
-
-
-
-
-
-
-
     //********************************              relations          **************************************
     protected function User()
-{
-    return $this->belongsTo(UserInfo::class,'user_id');
-}
+    {
+        return $this->belongsTo(UserInfo::class, 'user_id');
+    }
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('property_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('stars');
-            $table->string('comment',255);
+            $table->string('comment', 255);
             $table->timestamps();
             $table->foreign('property_id')->references('id')->on('properties')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('user_infos')->onDelete('cascade');

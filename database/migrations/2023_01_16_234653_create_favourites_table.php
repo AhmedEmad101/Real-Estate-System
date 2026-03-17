@@ -21,7 +21,6 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('user_infos')->onDelete('cascade');
             $table->foreign('Favourite_property_id')->references('id')->on('properties')->onDelete('cascade');
 
-
         });
     }
 

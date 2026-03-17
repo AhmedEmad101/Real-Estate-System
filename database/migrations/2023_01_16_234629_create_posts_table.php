@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id('Post_ID');
             $table->unsignedBigInteger('User_ID');
-            $table->String('Post_Description',255);
-            $table->String('Post_Photo',600);
+            $table->String('Post_Description', 255);
+            $table->String('Post_Photo', 600);
             $table->Date('Post_Date');
             $table->foreign('User_ID')->references('id')->on('user_infos')->onDelete('cascade');
         });
