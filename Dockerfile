@@ -1,66 +1,51 @@
-# syntax=docker/dockerfile:1
-
-# Comments are provided throughout this file to help you get started.
-# If you need more help, visit the Dockerfile reference guide at
-# https://docs.docker.com/go/dockerfile-reference/
-
-# Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
-
-################################################################################
-
-# Create a stage for installing app dependencies defined in Composer.
-FROM composer:lts as deps
+# STAGE 1: The "Kitchen" (Build Stage)
+FROM composer:lts as builder
 
 WORKDIR /app
 
-# If your composer.json file defines scripts that run during dependency installation and
-# reference your application source files, uncomment the line below to copy all the files
-# into this layer.
-# COPY . .
+# 1. Copy the "Shopping List"
+COPY composer.json composer.lock ./
 
-# Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a bind mounts to composer.json and composer.lock to avoid having to copy them
-# into this layer.
-# Leverage a cache mount to /tmp/cache so that subsequent builds don't have to re-download packages.
-RUN --mount=type=bind,source=composer.json,target=composer.json \
-    --mount=type=bind,source=composer.lock,target=composer.lock \
-    --mount=type=cache,target=/tmp/cache \
-    composer install --no-dev --no-interaction
+# 2. ADD THIS LINE: Copy the helper file so Composer doesn't crash
+# (If you have multiple helpers, you might need to copy the whole app folder)
+COPY app/Helper.php ./app/Helper.php 
+
+# 3. Install dependencies WITHOUT the autoloader first to save time
+RUN composer install --no-dev --ignore-platform-reqs --no-interaction --no-autoloader
+
+# 4. Now copy the WHOLE project code
+COPY . .
+
+# 5. Finally, generate the "Optimized Autoloader" now that all files exist
+RUN composer dump-autoload --no-dev --optimize
 
 ################################################################################
 
-# Create a new stage for running the application that contains the minimal
-# runtime dependencies for the application. This often uses a different base
-# image from the install or build stage where the necessary files are copied
-# from the install stage.
-#
-# The example below uses the PHP Apache image as the foundation for running the app.
-# By specifying the "8.3.0-apache" tag, it will also use whatever happens to be the
-# most recent version of that tag when you build your Dockerfile.
-# If reproducibility is important, consider using a specific digest SHA, like
-# php@sha256:99cede493dfd88720b610eb8077c8688d3cca50003d76d1d539b0efc8cca72b4.
-FROM php:8.3.0-fpm 
-# Set working directory
+# STAGE 2: The "Dining Room" (Production Runtime Stage)
+# We start with a fresh, clean PHP image. It doesn't have Composer or Git.
+FROM php:8.3.0-fpm-alpine
+
+# Alpine is a tiny Linux distribution (only 5MB) which makes your image very small.
 WORKDIR /var/www/html
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    libzip-dev zip unzip git curl \
-    && docker-php-ext-install pdo pdo_mysql zip
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Install ONLY the PHP extensions needed to run the app (no build tools)
+RUN apk add --no-cache \
+    libzip-dev \
+    zip \
+    unzip \
+    libpng-dev \
+    && docker-php-ext-install pdo pdo_mysql gd zip
 
-# Copy app
+# --- THE MULTI-STAGE MAGIC ---
+# We reach back into the 'builder' stage and grab ONLY the vendor folder.
+COPY --from=builder /app/vendor /var/www/html/vendor
+
+# Copy the rest of your application code
 COPY . .
 
-# Install PHP dependencies inside container
-RUN composer install --no-dev --optimize-autoloader
-
-# Set permissions
+# Set permissions for Laravel
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Expose FPM port
 EXPOSE 9000
 
-# Start PHP-FPM
 CMD ["php-fpm"]
