@@ -42,7 +42,6 @@ class ContactController extends Controller
         $Contact->Message = $request->Message;
         $Contact->save();
 
-        return back()->with('ContactSend', 'your contact sent succesfully to admins');
     }
 
     /**

@@ -67,7 +67,6 @@ route::post('RentFilter', [SearchController::class, 'FilterInRent'])->name('Filt
 route::get('RentFilter', [SearchController::class, 'FilterInRent']);
 route::post('BuyFilter', [SearchController::class, 'FilterInBuy'])->name('FilterBuy');
 route::get('BuyFilter', [SearchController::class, 'FilterInBuy']);
-route::post('ContactSubmit', [ContactController::class, 'store']);
 route::get('ViewProperty/{id}', [PropertyController::class, 'ViewProperty']);
 
 Route::get('/create', [AdvertisementController::class, 'create'])->name('advertisements.create');
