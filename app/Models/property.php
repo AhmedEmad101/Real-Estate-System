@@ -15,6 +15,7 @@ class property extends Model
         'TypeID',
         'PublisherType',
         'Publisher_id',
+        'PropertyStatus',
         'location',
         'Description',
         'Area',
