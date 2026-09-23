@@ -1,0 +1,23 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main, development ]
+  pull_request:
+    branches: [ main, development ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      # Step 2: Build the Docker services defined in docker-compose.yml
+      - name: Build Docker Services
+        run: docker compose build
+      # Step 3: Tear down containers and volumes cleanly
+      - name: Cleanup Containers
+        if: always()
+        run: docker compose down -v
