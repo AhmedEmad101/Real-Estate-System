@@ -2,6 +2,30 @@ name: Continuous Integration
 
 on:
   push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build Docker Services
+        run: docker compose build
+
+      - name: Run Application Tests
+        run: docker compose run --rm app php artisan test
+
+      - name: Cleanup Containers
+        if: always()
+        run: docker compose down -vname: Continuous Integration
+
+on:
+  push:
     branches: [ main, development ]
   pull_request:
     branches: [ main, development ]
